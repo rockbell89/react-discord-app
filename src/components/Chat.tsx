@@ -8,12 +8,13 @@ import {
 import GifIcon from "@mui/icons-material/Gif";
 import ChatMessage from "./ChatMessage";
 import { Message } from "../utils";
+import { Timestamp } from "firebase/firestore/lite";
 
 const channelName = "react";
 
 const messages: Message[] = [
   {
-    timestamp: "2023-06-02",
+    timestamp: Timestamp.now(),
     message: "string",
     user: {
       uid: "string",

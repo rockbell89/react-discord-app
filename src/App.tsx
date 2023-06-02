@@ -29,8 +29,6 @@ function App() {
     });
   }, [dispatch]);
 
-  console.log(user);
-
   // 로그인 전
   if (!user) {
     return <Login />;

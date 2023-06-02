@@ -1,5 +1,7 @@
+import { Timestamp } from "firebase/firestore/lite";
+
 export type Message = {
-  timestamp: any;
+  timestamp?: Timestamp;
   message: string;
   user: User;
 };

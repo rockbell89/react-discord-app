@@ -6,6 +6,7 @@ import SidebarChannel from "./SidebarChannel";
 import { Channel } from "../utils";
 import SidebarAccount from "./SidebarAccount";
 import "./Sidebar.scss";
+import { useAppSelector } from "../app/hooks";
 
 const channels: Channel[] = [
   {
@@ -22,13 +23,9 @@ const channels: Channel[] = [
   },
 ];
 
-const user = {
-  uid: "u1",
-  photo: "./icon.png",
-  displayName: "록벨",
-};
-
 const Sidebar = () => {
+  const user = useAppSelector((state) => state.user);
+
   return (
     <div className="sidebar">
       <div className="sidebarLeft">

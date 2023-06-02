@@ -1,18 +1,14 @@
+import { auth } from "../firebase";
+import { User } from "../utils";
 import "./SidebarAccount.scss";
 
-type UserAccount = {
-  uid: string;
-  photo: string;
-  displayName: string;
-};
-
 type UserAccoutProps = {
-  user: UserAccount;
+  user: User | null;
 };
 
 const SidebarAccount = ({ user }: UserAccoutProps) => {
   return (
-    <div className="sidebarAccount">
+    <div className="sidebarAccount" onClick={() => auth.signOut()}>
       <img src={user?.photo} alt="account" />
       <div className="accountName">
         <h4>{user?.displayName}</h4>
