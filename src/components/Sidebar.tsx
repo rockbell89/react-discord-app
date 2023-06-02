@@ -3,13 +3,9 @@ import AddIcon from "@mui/icons-material/Add";
 import MicIcon from "@mui/icons-material/Mic";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 import SidebarChannel from "./SidebarChannel";
+import { Channel } from "../utils";
 import SidebarAccount from "./SidebarAccount";
 import "./Sidebar.scss";
-
-export type Channel = {
-  id: string;
-  channelName: string;
-};
 
 const channels: Channel[] = [
   {

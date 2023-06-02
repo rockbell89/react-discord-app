@@ -1,4 +1,4 @@
-import { Channel } from "./Sidebar";
+import { Channel } from "../utils";
 import "./SidebarChannel.scss";
 
 type SidebarChannelProps = {
