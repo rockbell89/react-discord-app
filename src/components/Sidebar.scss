@@ -76,29 +76,6 @@
       padding-top: 10px;
       margin-left: -3px;
 
-      .sidebarAccount {
-        display: flex;
-        align-items: center;
-
-        img {
-          width: 55px;
-          border-radius: 50%;
-          cursor: pointer;
-        }
-
-        .accountName {
-          margin-left: 5px;
-
-          h4 {
-            color: white;
-            font-weight: 500;
-          }
-          span {
-            color: #686a6e;
-          }
-        }
-      }
-
       .sidebarVoice {
         display: flex;
         gap: 12px;
