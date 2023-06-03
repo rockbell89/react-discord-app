@@ -8,10 +8,19 @@ import "./Sidebar.scss";
 import { useAppSelector } from "../app/hooks";
 import useCollection from "../hooks/useCollection";
 import { Channel } from "../utils";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../firebase";
 
 const Sidebar = () => {
   const user = useAppSelector((state) => state.user.user);
   const { documents: channels } = useCollection("channels");
+
+  const addChannel = async () => {
+    const newChannel = prompt("채널명을 입력해주세요");
+    await addDoc(collection(db, "channels"), {
+      channelName: newChannel,
+    });
+  };
 
   return (
     <div className="sidebar">
@@ -36,7 +45,10 @@ const Sidebar = () => {
               <ExpandMoreOutlined />
               <h4>Front-End Dev.</h4>
             </div>
-            <AddIcon className="sidebarAddChannel" />
+            <AddIcon
+              className="sidebarAddChannel"
+              onClick={() => addChannel()}
+            />
           </div>
 
           <div className="sidebarChannelList">

@@ -11,7 +11,6 @@ export const channelSlice = createSlice({
   reducers: {
     setChannel: (state, action) => {
       state.channel = action.payload;
-      console.log(state.channel);
     },
   },
 });
