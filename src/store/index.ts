@@ -1,8 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";
+import channelSlice from "./channelSlice";
 
 export const store = configureStore({
-  reducer: userReducer,
+  reducer: {
+    user: userReducer,
+    channel: channelSlice,
+  },
 });
 
 export type AppDispatch = typeof store.dispatch;

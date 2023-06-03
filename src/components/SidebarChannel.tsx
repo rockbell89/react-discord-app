@@ -1,11 +1,15 @@
 import "./SidebarChannel.scss";
 import { Channel } from "../utils";
+import { setChannel } from "../store/channelSlice";
+import { useAppDispatch } from "../app/hooks";
 
 const SidebarChannel = ({ id, channel }: Channel) => {
+  const dispatch = useAppDispatch();
+
   return (
     <div
       className="sidebarChannel"
-      onClick={() => console.log(`channel id :${id}`)}
+      onClick={() => dispatch(setChannel(channel))}
     >
       <h4>
         <span className="sidebarChannelHash">#</span>

@@ -9,8 +9,7 @@ import GifIcon from "@mui/icons-material/Gif";
 import ChatMessage from "./ChatMessage";
 import { Message } from "../utils";
 import { Timestamp } from "firebase/firestore";
-
-const channelName = "react";
+import { useAppSelector } from "../app/hooks";
 
 const messages: Message[] = [
   {
@@ -26,9 +25,11 @@ const messages: Message[] = [
 ];
 
 const Chat = () => {
+  const { channel } = useAppSelector((state) => state.channel);
+
   return (
     <div className="chat">
-      <ChatHeader channelName={channelName} />
+      <ChatHeader channelName={channel?.channel.channelName} />
       <div className="chatMessages">
         {messages.map((message, index) => (
           <ChatMessage
