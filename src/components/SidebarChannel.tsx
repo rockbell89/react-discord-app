@@ -1,12 +1,7 @@
-import { Channel } from "../utils";
 import "./SidebarChannel.scss";
+import { Channel } from "../utils";
 
-type SidebarChannelProps = {
-  id: string;
-  channel: Channel;
-};
-
-const SidebarChannel = ({ id, channel }: SidebarChannelProps) => {
+const SidebarChannel = ({ id, channel }: Channel) => {
   return (
     <div
       className="sidebarChannel"
@@ -14,7 +9,7 @@ const SidebarChannel = ({ id, channel }: SidebarChannelProps) => {
     >
       <h4>
         <span className="sidebarChannelHash">#</span>
-        {channel.channelName}
+        <span>{channel.channel.channelName}</span>
       </h4>
     </div>
   );

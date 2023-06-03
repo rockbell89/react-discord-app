@@ -3,28 +3,15 @@ import AddIcon from "@mui/icons-material/Add";
 import MicIcon from "@mui/icons-material/Mic";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 import SidebarChannel from "./SidebarChannel";
-import { Channel } from "../utils";
 import SidebarAccount from "./SidebarAccount";
 import "./Sidebar.scss";
 import { useAppSelector } from "../app/hooks";
-
-const channels: Channel[] = [
-  {
-    id: "c1",
-    channelName: "react",
-  },
-  {
-    id: "c2",
-    channelName: "next",
-  },
-  {
-    id: "c3",
-    channelName: "firebase",
-  },
-];
+import useCollection from "../hooks/useCollection";
+import { Channel } from "../utils";
 
 const Sidebar = () => {
   const user = useAppSelector((state) => state.user);
+  const { documents: channels } = useCollection("channels");
 
   return (
     <div className="sidebar">
@@ -53,7 +40,7 @@ const Sidebar = () => {
           </div>
 
           <div className="sidebarChannelList">
-            {channels.map((channel) => (
+            {channels.map((channel: Channel) => (
               <SidebarChannel
                 id={channel.id}
                 channel={channel}

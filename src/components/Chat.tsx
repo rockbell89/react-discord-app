@@ -8,7 +8,7 @@ import {
 import GifIcon from "@mui/icons-material/Gif";
 import ChatMessage from "./ChatMessage";
 import { Message } from "../utils";
-import { Timestamp } from "firebase/firestore/lite";
+import { Timestamp } from "firebase/firestore";
 
 const channelName = "react";
 

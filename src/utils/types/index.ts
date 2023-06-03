@@ -1,4 +1,5 @@
-import { Timestamp } from "firebase/firestore/lite";
+import { DocumentData } from "firebase/firestore";
+import { Timestamp } from "firebase/firestore";
 
 export type Message = {
   timestamp?: Timestamp;
@@ -8,7 +9,7 @@ export type Message = {
 
 export type Channel = {
   id: string;
-  channelName: string;
+  channel: DocumentData;
 };
 
 export type User = {
