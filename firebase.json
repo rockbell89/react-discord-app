@@ -1,6 +1,7 @@
 {
   "hosting": {
     "public": "build",
+    "site": "react-discord-apps",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {

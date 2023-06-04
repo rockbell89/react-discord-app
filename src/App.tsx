@@ -32,7 +32,7 @@ function App() {
   }, [dispatch]);
 
   // 로그인 전
-  if (!user) {
+  if (!user.user) {
     return <Login />;
   }
 
