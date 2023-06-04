@@ -9,7 +9,14 @@ const SidebarChannel = ({ id, channel }: Channel) => {
   return (
     <div
       className="sidebarChannel"
-      onClick={() => dispatch(setChannel(channel))}
+      onClick={() =>
+        dispatch(
+          setChannel({
+            channelId: id,
+            channelName: channel.channel.channelName,
+          })
+        )
+      }
     >
       <h4>
         <span className="sidebarChannelHash">#</span>

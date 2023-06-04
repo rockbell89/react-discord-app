@@ -1,8 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Channel } from "../utils";
 
-const initialState: { channel: Channel | null } = {
-  channel: null,
+type InitialChannelState = {
+  channelId: string | null;
+  channelName: string | null;
+};
+
+const initialState: InitialChannelState = {
+  channelId: null,
+  channelName: null,
 };
 
 export const channelSlice = createSlice({
@@ -10,7 +15,8 @@ export const channelSlice = createSlice({
   initialState: initialState,
   reducers: {
     setChannel: (state, action) => {
-      state.channel = action.payload;
+      state.channelId = action.payload.channelId;
+      state.channelName = action.payload.channelName;
     },
   },
 });
