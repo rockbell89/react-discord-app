@@ -1,5 +1,8 @@
 .sidebarChannel {
+  display: flex;
   padding-left: 20px;
+  align-items: center;
+  justify-content: space-between;
   h4 {
     color: #7b7c85;
     display: flex;
@@ -12,6 +15,10 @@
       background-color: #33363d;
       border-radius: 12px;
     }
+  }
+
+  svg {
+    color: #fff;
   }
 
   .sidebarChannelHash {

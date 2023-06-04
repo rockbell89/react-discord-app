@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import ChatHeader from "./ChatHeader";
 import "./Chat.scss";
 import {
@@ -6,30 +7,51 @@ import {
   EmojiEmotionsOutlined,
 } from "@mui/icons-material";
 import GifIcon from "@mui/icons-material/Gif";
+import { useAppSelector } from "../app/hooks";
+import { db } from "../firebase";
+import {
+  addDoc,
+  collection,
+  DocumentData,
+  DocumentReference,
+  onSnapshot,
+  orderBy,
+  query,
+  QueryDocumentSnapshot,
+  serverTimestamp,
+  Timestamp,
+} from "firebase/firestore";
 import ChatMessage from "./ChatMessage";
 import { Message } from "../utils";
-import { Timestamp, collection, onSnapshot, query } from "firebase/firestore";
-import { useAppSelector } from "../app/hooks";
-import { useEffect, useState } from "react";
-import { db } from "../firebase";
+
+interface Messages {
+  timestamp: Timestamp;
+  message: string;
+  user: {
+    uid: string;
+    photo: string;
+    email: string;
+    displayName: string;
+  };
+}
 
 const Chat = () => {
+  const user = useAppSelector((state) => state.user.user);
   const channelId = useAppSelector((state) => state.channel.channelId);
   const channelName = useAppSelector((state) => state.channel.channelName);
-  const [inputText, setInputText] = useState("");
+
+  const [inputText, setInputText] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputText(event.target.value);
-  };
-
   useEffect(() => {
-    const results: Message[] = [];
     onSnapshot(
-      query(collection(db, "channels", String(channelId), "messages")),
+      query(
+        collection(db, "channels", String(channelId), "messages"),
+        orderBy("timestamp", "asc")
+      ),
       (snapshot) => {
-        console.log(snapshot.docs);
-        snapshot.docs.forEach((doc) => {
+        let results: Message[] = [];
+        snapshot.docs.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
           results.push({
             timestamp: doc.data().timestamp,
             message: doc.data().message,
@@ -41,15 +63,32 @@ const Chat = () => {
     );
   }, [channelId]);
 
-  const sendMessage = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // TODO : 메세지 저장
+  const sendMessage = async (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+
+    const collectionRef = collection(
+      db,
+      "channels",
+      String(channelId),
+      "messages"
+    );
+    const docRef: DocumentReference<DocumentData> = await addDoc(
+      collectionRef,
+      {
+        timestamp: serverTimestamp(),
+        message: inputText,
+        user: user,
+      }
+    );
+    console.log(docRef);
+
     setInputText("");
   };
 
   return (
     <div className="chat">
       <ChatHeader channelName={channelName} />
+
       <div className="chatMessages">
         {messages.map((message, index) => (
           <ChatMessage
@@ -60,25 +99,29 @@ const Chat = () => {
           />
         ))}
       </div>
+
       <div className="chatInput">
         <AddCircleOutline fontSize="large" />
-        <form
-          onSubmit={(event: React.FormEvent<HTMLFormElement>) =>
-            sendMessage(event)
-          }
-        >
+        <form>
           <input
             type="text"
-            placeholder="내용을 입력해주세요"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              onChangeInput(event)
+            placeholder={`#${channelName} 메세지 전송`}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setInputText(e.target.value)
             }
-            value={inputText || ""}
+            value={inputText}
+            disabled={Boolean(!channelId)}
           />
-          <button type="submit" className="chatInputButton">
-            전송
+          <button
+            type="submit"
+            className="chatInputButton"
+            disabled={Boolean(!channelId)}
+            onClick={(e: React.MouseEvent<HTMLElement>) => sendMessage(e)}
+          >
+            送信
           </button>
         </form>
+
         <div className="chatInputIcons">
           <CardGiftcardOutlined />
           <GifIcon />

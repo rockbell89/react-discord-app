@@ -10,7 +10,7 @@ const ChatMessage = ({ message, timestamp, user }: Message) => {
         <h4>
           {user?.displayName}
           <span className="messageTimestamp">
-            {timestamp?.toDate().toLocaleDateString()}
+            {timestamp?.toDate().toLocaleString()}
           </span>
         </h4>
 

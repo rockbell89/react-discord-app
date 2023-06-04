@@ -10,16 +10,24 @@ import useCollection from "../hooks/useCollection";
 import { Channel } from "../utils";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../firebase";
+import { useState } from "react";
 
 const Sidebar = () => {
   const user = useAppSelector((state) => state.user.user);
   const { documents: channels } = useCollection("channels");
+  const [isToggle, setIsToggle] = useState(true);
 
   const addChannel = async () => {
     const newChannel = prompt("채널명을 입력해주세요");
-    await addDoc(collection(db, "channels"), {
-      channelName: newChannel,
-    });
+    if (newChannel && (newChannel as string).length > 0) {
+      await addDoc(collection(db, "channels"), {
+        channelName: newChannel,
+      });
+    }
+  };
+
+  const toggleChannels = () => {
+    setIsToggle((prevState) => !prevState);
   };
 
   return (
@@ -41,8 +49,8 @@ const Sidebar = () => {
 
         <div className="sidebarChannels">
           <div className="sidebarChannelsHeader">
-            <div className="sidebarHeader">
-              <ExpandMoreOutlined />
+            <div className="sidebarHeader" onClick={toggleChannels}>
+              {isToggle ? <ExpandMoreOutlined /> : <ExpandMoreOutlined />}
               <h4>Front-End Dev.</h4>
             </div>
             <AddIcon
@@ -50,16 +58,17 @@ const Sidebar = () => {
               onClick={() => addChannel()}
             />
           </div>
-
-          <div className="sidebarChannelList">
-            {channels.map((channel: Channel) => (
-              <SidebarChannel
-                id={channel.id}
-                channel={channel}
-                key={channel.id}
-              />
-            ))}
-          </div>
+          {isToggle && (
+            <div className="sidebarChannelList">
+              {channels.map((channel: Channel) => (
+                <SidebarChannel
+                  id={channel.id}
+                  channel={channel}
+                  key={channel.id}
+                />
+              ))}
+            </div>
+          )}
           <div className="sidebarSettings">
             <SidebarAccount user={user} />
             <div className="sidebarVoice">

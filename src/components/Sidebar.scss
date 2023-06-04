@@ -47,6 +47,7 @@
 
     .sidebarChannels {
       padding: 13px;
+      height: calc(100vh - 190px);
 
       .sidebarChannelsHeader {
         color: white;
@@ -62,6 +63,11 @@
           cursor: pointer;
         }
       }
+
+      .sidebarChannelList {
+        overflow-y: auto;
+        height: inherit;
+      }
     }
 
     .sidebarSettings {
@@ -73,6 +79,7 @@
       width: 93%;
       padding-bottom: 10px;
       border-top: 1px solid #686a6e;
+      background-color: #2b2d33;
       padding-top: 10px;
       margin-left: -3px;
 
